@@ -320,6 +320,32 @@
   }
 
   /**
+   * Services: animated tap hint (mobile only, driven by CSS media query).
+   * The hint animates only while the section is on screen, and stops for
+   * good once the visitor has opened a first panel.
+   */
+  const servicesSection = document.querySelector('.services');
+
+  if (servicesSection) {
+    if ('IntersectionObserver' in window) {
+      const servicesObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          servicesSection.classList.toggle('hint-visible', entry.isIntersecting);
+        });
+      }, { threshold: 0.15 });
+      servicesObserver.observe(servicesSection);
+    } else {
+      servicesSection.classList.add('hint-visible');
+    }
+
+    servicesSection.querySelectorAll('.service-panel').forEach(panel => {
+      panel.addEventListener('show.bs.collapse', () => {
+        servicesSection.classList.add('hints-dismissed');
+      }, { once: true });
+    });
+  }
+
+  /**
    * Reservation date + time-range fields: block past dates and Sundays,
    * and prevent choosing a time interval that overlaps a slot already
    * blocked manually from the admin dashboard (other slots on the same
