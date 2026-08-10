@@ -2671,6 +2671,129 @@ section,
 }
 
 /*--------------------------------------------------------------
+# Motion design mobile — À propos / Notre entreprise / Contact
+   (mobile & tablette uniquement, jusqu'à 991.98px — le rendu
+   ordinateur n'est jamais touché par ce bloc)
+--------------------------------------------------------------*/
+@media (max-width: 991.98px) {
+
+  /* Titres mis en avant : léger effet d'entrée + flash de couleur */
+  .about .section-title.aos-animate h2,
+  .resume .section-title.aos-animate h2,
+  .contact .section-title.aos-animate h2,
+  .about .content h2.aos-animate,
+  .resume .resume-title.aos-animate {
+    animation: dn-title-pop 0.7s cubic-bezier(.22, 1, .36, 1) both,
+               dn-title-flash 0.9s ease-out both;
+  }
+
+  .about .section-title.aos-animate h2:after,
+  .resume .section-title.aos-animate h2:after,
+  .contact .section-title.aos-animate h2:after {
+    height: 4px;
+    width: 64px;
+    animation: dn-underline-glow 1.3s ease-out 0.75s;
+  }
+
+  .resume .resume-title.aos-animate:after {
+    height: 4px;
+    width: 56px;
+    animation: dn-underline-glow 1.3s ease-out 0.6s;
+  }
+
+  /* Icônes des sous-titres : petite entrée en scène au survol de l'écran */
+  .about .expertise-item.aos-animate .expertise-title i,
+  .resume .resume-item.aos-animate .resume-icon,
+  .contact .info-item.aos-animate i {
+    animation: dn-icon-pop 0.6s cubic-bezier(.34, 1.56, .64, 1) 0.15s both;
+  }
+
+  /* Mots-clés mis en valeur dans les descriptions */
+  .dn-kw {
+    font-weight: 700;
+    color: var(--accent-color);
+    background-image: linear-gradient(90deg, color-mix(in srgb, var(--accent-color), transparent 78%), color-mix(in srgb, var(--accent-color), transparent 78%));
+    background-repeat: no-repeat;
+    background-position: 0 88%;
+    background-size: 0% 45%;
+    border-radius: 3px;
+    padding: 0 2px;
+  }
+
+  .aos-animate .dn-kw {
+    animation: dn-kw-sweep 0.7s ease-out both;
+  }
+
+  .aos-animate .dn-kw:nth-of-type(2) {
+    animation-delay: 0.18s;
+  }
+
+  .aos-animate .dn-kw:nth-of-type(3) {
+    animation-delay: 0.36s;
+  }
+
+  .aos-animate .dn-kw:nth-of-type(4) {
+    animation-delay: 0.54s;
+  }
+}
+
+@keyframes dn-title-pop {
+  0% {
+    transform: scale(0.88);
+    opacity: 0;
+  }
+  65% {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes dn-title-flash {
+  0% {
+    color: var(--accent-color);
+  }
+  100% {
+    color: var(--heading-color);
+  }
+}
+
+@keyframes dn-underline-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-color), transparent 60%);
+  }
+  50% {
+    box-shadow: 0 0 16px 2px color-mix(in srgb, var(--accent-color), transparent 40%);
+  }
+}
+
+@keyframes dn-icon-pop {
+  0% {
+    transform: scale(0.3) rotate(-20deg);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.15) rotate(6deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes dn-kw-sweep {
+  0% {
+    background-size: 0% 45%;
+  }
+  100% {
+    background-size: 100% 45%;
+  }
+}
+
+/*--------------------------------------------------------------
 # Reduced Motion
 --------------------------------------------------------------*/
 @media (prefers-reduced-motion: reduce) {
