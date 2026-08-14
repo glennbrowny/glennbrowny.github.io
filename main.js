@@ -320,32 +320,6 @@
   }
 
   /**
-   * Services: animated tap hint (mobile only, driven by CSS media query).
-   * The hint animates only while the section is on screen, and stops for
-   * good once the visitor has opened a first panel.
-   */
-  const servicesSection = document.querySelector('.services');
-
-  if (servicesSection) {
-    if ('IntersectionObserver' in window) {
-      const servicesObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          servicesSection.classList.toggle('hint-visible', entry.isIntersecting);
-        });
-      }, { threshold: 0.15 });
-      servicesObserver.observe(servicesSection);
-    } else {
-      servicesSection.classList.add('hint-visible');
-    }
-
-    servicesSection.querySelectorAll('.service-panel').forEach(panel => {
-      panel.addEventListener('show.bs.collapse', () => {
-        servicesSection.classList.add('hints-dismissed');
-      }, { once: true });
-    });
-  }
-
-  /**
    * Reservation date + time-range fields: block past dates and Sundays,
    * and prevent choosing a time interval that overlaps a slot already
    * blocked manually from the admin dashboard (other slots on the same
@@ -433,6 +407,128 @@
 
     reservationStartField.addEventListener('change', validateSlot);
     reservationEndField.addEventListener('change', validateSlot);
+  }
+
+  /**
+   * Mobile-only viewport check, shared by the background music and the
+   * auto-scroll features below (same breakpoint as the rest of the site's
+   * mobile-only motion design).
+   */
+  const isMobileViewport = window.matchMedia('(max-width: 991.98px)').matches;
+
+  /**
+   * Background music (mobile only): loops "Nuvole Bianche" and shows a
+   * fixed bottom-right "now playing" toggle. Most mobile browsers block
+   * autoplay with sound until a real user gesture, so if the initial
+   * play() is rejected, playback starts on the visitor's first touch/click.
+   */
+  const bgMusic = document.getElementById('bgMusic');
+  const musicToggle = document.getElementById('musicToggle');
+
+  if (bgMusic && musicToggle && isMobileViewport) {
+    const setMusicState = (isPlaying) => {
+      musicToggle.classList.toggle('is-playing', isPlaying);
+      musicToggle.setAttribute('aria-pressed', String(isPlaying));
+      musicToggle.setAttribute('aria-label', isPlaying ? 'Couper la musique de fond' : 'Activer la musique de fond');
+    };
+
+    const attemptPlay = () => {
+      bgMusic.play().then(() => setMusicState(true)).catch(() => setMusicState(false));
+    };
+
+    attemptPlay();
+
+    const resumeOnFirstGesture = () => attemptPlay();
+    document.addEventListener('touchstart', resumeOnFirstGesture, { once: true, passive: true });
+    document.addEventListener('click', resumeOnFirstGesture, { once: true });
+
+    musicToggle.addEventListener('click', () => {
+      if (bgMusic.paused) {
+        attemptPlay();
+      } else {
+        bgMusic.pause();
+      }
+    });
+
+    bgMusic.addEventListener('play', () => setMusicState(true));
+    bgMusic.addEventListener('pause', () => setMusicState(false));
+  }
+
+  /**
+   * Mobile-only auto-scroll: gently scrolls the page from top to bottom on
+   * load so visitors can read without having to touch the screen. Stops
+   * immediately on the visitor's first touch, handing control back to them.
+   * Whenever the page bottom is reached — whether by the auto-scroll or by
+   * the visitor scrolling manually — it waits 2s then moves to Réservation.
+   */
+  if (isMobileViewport && !prefersReducedMotion) {
+    const AUTO_SCROLL_SPEED = 45; // pixels per second
+    const BOTTOM_THRESHOLD = 4; // px tolerance to count as "at the bottom"
+
+    let autoScrollActive = true;
+    let rafId = null;
+    let lastTimestamp = null;
+    let reservationRedirectPending = false;
+    let reservationRedirectHandled = false;
+    let reservationTimeoutId = null;
+
+    const atPageBottom = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      return scrollable <= 0 || window.scrollY >= scrollable - BOTTOM_THRESHOLD;
+    };
+
+    const stopAutoScroll = () => {
+      autoScrollActive = false;
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    };
+
+    const autoScrollStep = (timestamp) => {
+      if (!autoScrollActive) return;
+      if (lastTimestamp === null) lastTimestamp = timestamp;
+      const elapsedSeconds = (timestamp - lastTimestamp) / 1000;
+      lastTimestamp = timestamp;
+
+      if (atPageBottom()) {
+        stopAutoScroll();
+        return;
+      }
+
+      window.scrollBy(0, AUTO_SCROLL_SPEED * elapsedSeconds);
+      rafId = requestAnimationFrame(autoScrollStep);
+    };
+
+    document.addEventListener('touchstart', stopAutoScroll, { once: true, passive: true });
+    rafId = requestAnimationFrame(autoScrollStep);
+
+    const goToReservation = () => {
+      const reservationSection = document.getElementById('reservation');
+      if (!reservationSection) return;
+      const scrollMarginTop = getComputedStyle(reservationSection).scrollMarginTop;
+      window.scrollTo({
+        top: reservationSection.offsetTop - parseInt(scrollMarginTop),
+        behavior: 'smooth'
+      });
+    };
+
+    window.addEventListener('scroll', () => {
+      if (reservationRedirectHandled) return;
+
+      if (atPageBottom()) {
+        if (!reservationRedirectPending) {
+          reservationRedirectPending = true;
+          reservationTimeoutId = setTimeout(() => {
+            reservationRedirectHandled = true;
+            goToReservation();
+          }, 2000);
+        }
+      } else if (reservationRedirectPending) {
+        reservationRedirectPending = false;
+        clearTimeout(reservationTimeoutId);
+      }
+    }, { passive: true });
   }
 
 })();

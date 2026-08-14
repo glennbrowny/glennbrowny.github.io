@@ -573,6 +573,134 @@ h6 {
 }
 
 /*--------------------------------------------------------------
+# Music Toggle (now playing) — mobile / tablette uniquement
+--------------------------------------------------------------*/
+.music-toggle {
+  display: none;
+}
+
+@media (max-width: 991.98px) {
+  .music-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    right: 15px;
+    bottom: calc(75px + env(safe-area-inset-bottom, 0px));
+    z-index: 99998;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), #000 25%));
+    box-shadow: 0 8px 20px -8px color-mix(in srgb, var(--accent-color), transparent 20%);
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.2s ease;
+  }
+
+  .music-toggle:active {
+    transform: scale(0.92);
+  }
+
+  /* Halo qui respire autour du bouton pendant la lecture */
+  .music-toggle::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-color);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .music-toggle.is-playing::after {
+    animation: dn-music-ring 2.4s ease-out infinite;
+  }
+
+  .music-toggle .music-icon-static {
+    font-size: 20px;
+    line-height: 0;
+    color: var(--contrast-color);
+  }
+
+  .music-toggle .music-bars {
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 3px;
+    height: 18px;
+  }
+
+  .music-toggle .music-bars span {
+    display: block;
+    width: 3px;
+    height: 6px;
+    border-radius: 2px;
+    background: var(--contrast-color);
+  }
+
+  .music-toggle.is-playing .music-icon-static {
+    display: none;
+  }
+
+  .music-toggle.is-playing .music-bars {
+    display: flex;
+  }
+
+  .music-toggle.is-playing .music-bars span {
+    animation: dn-music-bar 1s ease-in-out infinite;
+  }
+
+  .music-toggle.is-playing .music-bars span:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .music-toggle.is-playing .music-bars span:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  .music-toggle.is-playing .music-bars span:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  .music-toggle.is-playing .music-bars span:nth-child(4) {
+    animation-delay: 0.45s;
+  }
+}
+
+@keyframes dn-music-bar {
+  0%, 100% {
+    height: 6px;
+  }
+  50% {
+    height: 18px;
+  }
+}
+
+@keyframes dn-music-ring {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-toggle.is-playing .music-bars span {
+    animation: none !important;
+    height: 14px;
+  }
+
+  .music-toggle.is-playing::after {
+    animation: none !important;
+  }
+}
+
+/*--------------------------------------------------------------
 # Disable aos animation delay on mobile devices
 --------------------------------------------------------------*/
 @media screen and (max-width: 768px) {
@@ -1664,253 +1792,6 @@ section,
 @media (max-width: 575px) {
   .services .service-panel {
     margin-left: 0;
-  }
-}
-
-/* Indice tactile animé : uniquement sur mobile / tablette.
-   Masqué et sans effet sur le rendu ordinateur (>= 992px). */
-.services .tap-hint {
-  display: none;
-}
-
-@media (max-width: 991.98px) {
-
-  /* Le titre devient une vraie ligne d'accordéon : cible tactile pleine
-     largeur, chevron aligné à droite dans une pastille bien visible. */
-  .services .service-item .title a {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-  }
-
-  .services .service-item .toggle-icon {
-    position: relative;
-    flex-shrink: 0;
-    width: 30px;
-    height: 30px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: 15px;
-    color: var(--accent-color);
-    background: color-mix(in srgb, var(--accent-color), transparent 88%);
-  }
-
-  /* Halo qui se propage autour du chevron pour attirer le regard */
-  .services .service-item .toggle-icon::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    border: 2px solid var(--accent-color);
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .services .service-item .title a[aria-expanded="true"] .toggle-icon {
-    background: var(--accent-color);
-    color: var(--contrast-color);
-  }
-
-  /* Pastille "Appuyez pour voir plus" */
-  .services .tap-hint {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    overflow: hidden;
-    margin-top: 12px;
-    padding: 8px 14px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 1.2;
-    text-decoration: none;
-    color: var(--accent-color);
-    background: color-mix(in srgb, var(--accent-color), transparent 90%);
-    border: 1px solid color-mix(in srgb, var(--accent-color), transparent 70%);
-    transition: transform 0.2s ease, background-color 0.3s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .services .tap-hint:active {
-    transform: scale(0.96);
-    background: color-mix(in srgb, var(--accent-color), transparent 80%);
-  }
-
-  /* Reflet lumineux qui balaie la pastille */
-  .services .tap-hint::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 40%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent-color), transparent 78%), transparent);
-    transform: translateX(-140%) skewX(-20deg);
-    pointer-events: none;
-  }
-
-  .services .tap-hint .tap-hint-arrow,
-  .services .tap-hint .tap-hint-hand {
-    font-size: 14px;
-    line-height: 1;
-    transition: transform 0.3s ease;
-  }
-
-  .services .tap-hint .tap-hint-close {
-    display: none;
-  }
-
-  .services .tap-hint[aria-expanded="true"] {
-    background: color-mix(in srgb, var(--accent-color), transparent 94%);
-  }
-
-  .services .tap-hint[aria-expanded="true"] .tap-hint-open {
-    display: none;
-  }
-
-  .services .tap-hint[aria-expanded="true"] .tap-hint-close {
-    display: inline;
-  }
-
-  .services .tap-hint[aria-expanded="true"] .tap-hint-arrow {
-    transform: rotate(180deg);
-  }
-
-  /* Les animations ne tournent que lorsque la section est à l'écran et
-     tant que le visiteur n'a pas encore ouvert un panneau. */
-  .services.hint-visible:not(.hints-dismissed) .title a[aria-expanded="false"] .toggle-icon {
-    animation: dn-tap-bounce 2.6s ease-in-out infinite;
-  }
-
-  .services.hint-visible:not(.hints-dismissed) .title a[aria-expanded="false"] .toggle-icon::after {
-    animation: dn-tap-ring 2.6s ease-out infinite;
-  }
-
-  .services.hint-visible:not(.hints-dismissed) .tap-hint[aria-expanded="false"] {
-    animation: dn-hint-glow 2.6s ease-in-out infinite;
-  }
-
-  .services.hint-visible:not(.hints-dismissed) .tap-hint[aria-expanded="false"]::before {
-    animation: dn-hint-shimmer 2.6s ease-in-out infinite;
-  }
-
-  .services.hint-visible:not(.hints-dismissed) .tap-hint[aria-expanded="false"] .tap-hint-hand {
-    animation: dn-hand-tap 2.6s ease-in-out infinite;
-  }
-
-  /* Décalage entre les quatre services : l'indice ondule d'une carte à
-     l'autre au lieu de clignoter en bloc. */
-  .services.hint-visible:not(.hints-dismissed) .service-item:nth-of-type(2) .toggle-icon,
-  .services.hint-visible:not(.hints-dismissed) .service-item:nth-of-type(2) .toggle-icon::after,
-  .services.hint-visible:not(.hints-dismissed) .service-item:nth-of-type(2) .tap-hint,
-  .services.hint-visible:not(.hints-dismissed) .service-item:nth-of-type(2) .tap-hint::before,
-  .services.hint-visible:not(.hints-dismissed) .service-item:nth-of-type(2) .tap-hint-hand {
-    animation-delay: 0.2s;
-  }
-
-  .services.hint-visible:not(.hints-dismissed) .service-item:nth-of-type(3) .toggle-icon,
-  .services.hint-visible:not(.hints-dismissed) .service-item:nth-of-type(3) .toggle-icon::after,
-  .services.hint-visible:not(.hints-dismissed) .service-item:nth-of-type(3) .tap-hint,
-  .services.hint-visible:not(.hints-dismissed) .service-item:nth-of-type(3) .tap-hint::before,
-  .services.hint-visible:not(.hints-dismissed) .service-item:nth-of-type(3) .tap-hint-hand {
-    animation-delay: 0.4s;
-  }
-
-  .services.hint-visible:not(.hints-dismissed) .service-item:nth-of-type(4) .toggle-icon,
-  .services.hint-visible:not(.hints-dismissed) .service-item:nth-of-type(4) .toggle-icon::after,
-  .services.hint-visible:not(.hints-dismissed) .service-item:nth-of-type(4) .tap-hint,
-  .services.hint-visible:not(.hints-dismissed) .service-item:nth-of-type(4) .tap-hint::before,
-  .services.hint-visible:not(.hints-dismissed) .service-item:nth-of-type(4) .tap-hint-hand {
-    animation-delay: 0.6s;
-  }
-}
-
-@keyframes dn-tap-bounce {
-  0%, 50%, 100% {
-    transform: translateY(0);
-  }
-  60% {
-    transform: translateY(5px);
-  }
-  70% {
-    transform: translateY(0);
-  }
-  80% {
-    transform: translateY(4px);
-  }
-  90% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes dn-tap-ring {
-  0%, 45% {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  55% {
-    opacity: 0.5;
-  }
-  100% {
-    transform: scale(1.9);
-    opacity: 0;
-  }
-}
-
-@keyframes dn-hint-glow {
-  0%, 45%, 100% {
-    transform: translateY(0);
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-color), transparent 70%);
-  }
-  60% {
-    transform: translateY(-3px);
-    box-shadow: 0 0 0 9px color-mix(in srgb, var(--accent-color), transparent 100%);
-  }
-  75% {
-    transform: translateY(0);
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-color), transparent 100%);
-  }
-}
-
-@keyframes dn-hint-shimmer {
-  0%, 25% {
-    transform: translateX(-140%) skewX(-20deg);
-  }
-  75%, 100% {
-    transform: translateX(320%) skewX(-20deg);
-  }
-}
-
-@keyframes dn-hand-tap {
-  0%, 50%, 100% {
-    transform: translateY(0) scale(1);
-  }
-  60% {
-    transform: translateY(3px) scale(0.86);
-  }
-  70% {
-    transform: translateY(0) scale(1);
-  }
-  80% {
-    transform: translateY(3px) scale(0.86);
-  }
-  90% {
-    transform: translateY(0) scale(1);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .services .toggle-icon,
-  .services .toggle-icon::after,
-  .services .tap-hint,
-  .services .tap-hint::before,
-  .services .tap-hint-hand {
-    animation: none !important;
   }
 }
 
