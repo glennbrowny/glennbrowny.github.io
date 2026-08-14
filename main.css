@@ -899,6 +899,48 @@ section,
   will-change: transform;
 }
 
+/* Douce respiration du fond flouté du hero : purement décoratif, derrière la
+   photo nette et le texte (z-index 1-2), ne déplace ni le contenu ni les
+   boutons. */
+.hero .hero-bg-extend {
+  animation: dn-hero-extend-breathe 20s ease-in-out infinite;
+}
+
+.hero .hero-bg-logo {
+  animation: dn-hero-glow-drift 14s ease-in-out infinite;
+}
+
+@keyframes dn-hero-extend-breathe {
+  0%, 100% {
+    transform: scale(1.15);
+  }
+  50% {
+    transform: scale(1.22);
+  }
+}
+
+@keyframes dn-hero-glow-drift {
+  0%, 100% {
+    transform: scale(1.2) translate(0, 0) rotate(0deg);
+    opacity: 0.14;
+  }
+  33% {
+    transform: scale(1.32) translate(2%, -2%) rotate(2deg);
+    opacity: 0.2;
+  }
+  66% {
+    transform: scale(1.28) translate(-2%, 2%) rotate(-2deg);
+    opacity: 0.17;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero .hero-bg-extend,
+  .hero .hero-bg-logo {
+    animation: none !important;
+  }
+}
+
 .hero-cta {
   display: flex;
   flex-wrap: wrap;
