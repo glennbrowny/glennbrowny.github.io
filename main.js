@@ -10,6 +10,19 @@
   "use strict";
 
   /**
+   * Always start a fresh load/refresh at the top of the page. Without this,
+   * the browser restores whatever scroll position the tab had before the
+   * refresh — which, on mobile, can be deep down the page (or on
+   * Réservation) if the auto-scroll had moved it there beforehand.
+   */
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  if (!window.location.hash) {
+    window.scrollTo(0, 0);
+  }
+
+  /**
    * Header toggle
    */
   const headerToggleBtn = document.querySelector('.header-toggle');
@@ -316,6 +329,32 @@
 
     portraitWrap.addEventListener('mouseleave', () => {
       portraitImg.style.transform = 'rotateY(0) rotateX(0) scale(1)';
+    });
+  }
+
+  /**
+   * Services: animated tap hint (mobile only, driven by CSS media query).
+   * The hint animates only while the section is on screen, and stops for
+   * good once the visitor has opened a first panel.
+   */
+  const servicesSection = document.querySelector('.services');
+
+  if (servicesSection) {
+    if ('IntersectionObserver' in window) {
+      const servicesObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          servicesSection.classList.toggle('hint-visible', entry.isIntersecting);
+        });
+      }, { threshold: 0.15 });
+      servicesObserver.observe(servicesSection);
+    } else {
+      servicesSection.classList.add('hint-visible');
+    }
+
+    servicesSection.querySelectorAll('.service-panel').forEach(panel => {
+      panel.addEventListener('show.bs.collapse', () => {
+        servicesSection.classList.add('hints-dismissed');
+      }, { once: true });
     });
   }
 
