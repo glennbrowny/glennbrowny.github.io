@@ -517,7 +517,7 @@
    * page bottom is reached, it simply stays there.
    */
   if (isMobileViewport && !prefersReducedMotion) {
-    const TOTAL_SCROLL_DURATION = 30; // seconds for an uninterrupted top-to-bottom run
+    const TOTAL_SCROLL_DURATION = 18; // seconds for an uninterrupted top-to-bottom run
     const BOTTOM_THRESHOLD = 4; // px tolerance to count as "at the bottom"
     const IDLE_DELAY = 5000; // ms of inactivity before auto-scroll (re)starts
 
