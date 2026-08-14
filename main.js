@@ -516,7 +516,7 @@
    * manually — it waits 2s then moves to Réservation.
    */
   if (isMobileViewport && !prefersReducedMotion) {
-    const AUTO_SCROLL_SPEED = 90; // pixels per second
+    const AUTO_SCROLL_SPEED = 130; // pixels per second
     const BOTTOM_THRESHOLD = 4; // px tolerance to count as "at the bottom"
     const IDLE_DELAY = 5000; // ms of inactivity before auto-scroll (re)starts
 
