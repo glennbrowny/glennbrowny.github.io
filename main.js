@@ -509,24 +509,27 @@
    * Mobile-only auto-scroll: after 5s without any interaction, gently
    * scrolls the page from top to bottom so visitors can read without having
    * to touch the screen, and starts the background music the first time it
-   * kicks in. Any interaction (touch, mouse movement, wheel, click) pauses
-   * it immediately and re-arms the 5s idle timer, so it resumes on its own
-   * once the visitor stops interacting again. Whenever the page bottom is
-   * reached — whether by the auto-scroll or by the visitor scrolling
-   * manually — it waits 2s then moves to Réservation.
+   * kicks in. Its speed is computed from the page's actual height so an
+   * uninterrupted run always takes exactly TOTAL_SCROLL_DURATION seconds,
+   * whatever the content length. Any interaction (touch, mouse movement,
+   * wheel, click) pauses it immediately and re-arms the 5s idle timer, so it
+   * resumes on its own once the visitor stops interacting again. Once the
+   * page bottom is reached, it simply stays there.
    */
   if (isMobileViewport && !prefersReducedMotion) {
-    const AUTO_SCROLL_SPEED = 130; // pixels per second
+    const TOTAL_SCROLL_DURATION = 30; // seconds for an uninterrupted top-to-bottom run
     const BOTTOM_THRESHOLD = 4; // px tolerance to count as "at the bottom"
     const IDLE_DELAY = 5000; // ms of inactivity before auto-scroll (re)starts
+
+    const scrollSpeed = Math.max(
+      1,
+      (document.documentElement.scrollHeight - window.innerHeight) / TOTAL_SCROLL_DURATION
+    ); // pixels per second
 
     let rafId = null;
     let lastTimestamp = null;
     let idleTimerId = null;
     let musicStarted = false;
-    let reservationRedirectPending = false;
-    let reservationRedirectHandled = false;
-    let reservationTimeoutId = null;
 
     const atPageBottom = () => {
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
@@ -551,7 +554,7 @@
         return;
       }
 
-      window.scrollBy(0, AUTO_SCROLL_SPEED * elapsedSeconds);
+      window.scrollBy(0, scrollSpeed * elapsedSeconds);
       rafId = requestAnimationFrame(autoScrollStep);
     };
 
@@ -583,33 +586,6 @@
     });
 
     scheduleAutoScroll();
-
-    const goToReservation = () => {
-      const reservationSection = document.getElementById('reservation');
-      if (!reservationSection) return;
-      const scrollMarginTop = getComputedStyle(reservationSection).scrollMarginTop;
-      window.scrollTo({
-        top: reservationSection.offsetTop - parseInt(scrollMarginTop),
-        behavior: 'smooth'
-      });
-    };
-
-    window.addEventListener('scroll', () => {
-      if (reservationRedirectHandled) return;
-
-      if (atPageBottom()) {
-        if (!reservationRedirectPending) {
-          reservationRedirectPending = true;
-          reservationTimeoutId = setTimeout(() => {
-            reservationRedirectHandled = true;
-            goToReservation();
-          }, 2000);
-        }
-      } else if (reservationRedirectPending) {
-        reservationRedirectPending = false;
-        clearTimeout(reservationTimeoutId);
-      }
-    }, { passive: true });
   }
 
 })();
