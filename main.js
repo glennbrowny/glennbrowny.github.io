@@ -425,6 +425,8 @@
   const bgMusic = document.getElementById('bgMusic');
   const musicToggle = document.getElementById('musicToggle');
 
+  let attemptPlayMusic = () => {};
+
   if (bgMusic && musicToggle && isMobileViewport) {
     const setMusicState = (isPlaying) => {
       musicToggle.classList.toggle('is-playing', isPlaying);
@@ -432,19 +434,19 @@
       musicToggle.setAttribute('aria-label', isPlaying ? 'Couper la musique de fond' : 'Activer la musique de fond');
     };
 
-    const attemptPlay = () => {
+    attemptPlayMusic = () => {
       bgMusic.play().then(() => setMusicState(true)).catch(() => setMusicState(false));
     };
 
-    attemptPlay();
+    if (prefersReducedMotion) attemptPlayMusic();
 
-    const resumeOnFirstGesture = () => attemptPlay();
+    const resumeOnFirstGesture = () => attemptPlayMusic();
     document.addEventListener('touchstart', resumeOnFirstGesture, { once: true, passive: true });
     document.addEventListener('click', resumeOnFirstGesture, { once: true });
 
     musicToggle.addEventListener('click', () => {
       if (bgMusic.paused) {
-        attemptPlay();
+        attemptPlayMusic();
       } else {
         bgMusic.pause();
       }
@@ -455,19 +457,24 @@
   }
 
   /**
-   * Mobile-only auto-scroll: gently scrolls the page from top to bottom on
-   * load so visitors can read without having to touch the screen. Stops
-   * immediately on the visitor's first touch, handing control back to them.
-   * Whenever the page bottom is reached — whether by the auto-scroll or by
-   * the visitor scrolling manually — it waits 2s then moves to Réservation.
+   * Mobile-only auto-scroll: after 5s without any interaction, gently
+   * scrolls the page from top to bottom so visitors can read without having
+   * to touch the screen, and starts the background music the first time it
+   * kicks in. Any interaction (touch, mouse movement, wheel, click) pauses
+   * it immediately and re-arms the 5s idle timer, so it resumes on its own
+   * once the visitor stops interacting again. Whenever the page bottom is
+   * reached — whether by the auto-scroll or by the visitor scrolling
+   * manually — it waits 2s then moves to Réservation.
    */
   if (isMobileViewport && !prefersReducedMotion) {
-    const AUTO_SCROLL_SPEED = 45; // pixels per second
+    const AUTO_SCROLL_SPEED = 65; // pixels per second
     const BOTTOM_THRESHOLD = 4; // px tolerance to count as "at the bottom"
+    const IDLE_DELAY = 5000; // ms of inactivity before auto-scroll (re)starts
 
-    let autoScrollActive = true;
     let rafId = null;
     let lastTimestamp = null;
+    let idleTimerId = null;
+    let musicStarted = false;
     let reservationRedirectPending = false;
     let reservationRedirectHandled = false;
     let reservationTimeoutId = null;
@@ -477,22 +484,21 @@
       return scrollable <= 0 || window.scrollY >= scrollable - BOTTOM_THRESHOLD;
     };
 
-    const stopAutoScroll = () => {
-      autoScrollActive = false;
+    const pauseAutoScroll = () => {
       if (rafId) {
         cancelAnimationFrame(rafId);
         rafId = null;
       }
+      lastTimestamp = null;
     };
 
     const autoScrollStep = (timestamp) => {
-      if (!autoScrollActive) return;
       if (lastTimestamp === null) lastTimestamp = timestamp;
       const elapsedSeconds = (timestamp - lastTimestamp) / 1000;
       lastTimestamp = timestamp;
 
       if (atPageBottom()) {
-        stopAutoScroll();
+        pauseAutoScroll();
         return;
       }
 
@@ -500,8 +506,30 @@
       rafId = requestAnimationFrame(autoScrollStep);
     };
 
-    document.addEventListener('touchstart', stopAutoScroll, { once: true, passive: true });
-    rafId = requestAnimationFrame(autoScrollStep);
+    const startAutoScroll = () => {
+      if (rafId || atPageBottom()) return;
+      if (!musicStarted) {
+        musicStarted = true;
+        attemptPlayMusic();
+      }
+      rafId = requestAnimationFrame(autoScrollStep);
+    };
+
+    const scheduleAutoScroll = () => {
+      clearTimeout(idleTimerId);
+      idleTimerId = setTimeout(startAutoScroll, IDLE_DELAY);
+    };
+
+    const handleActivity = () => {
+      pauseAutoScroll();
+      scheduleAutoScroll();
+    };
+
+    ['touchstart', 'touchmove', 'mousedown', 'mousemove', 'wheel', 'click'].forEach((eventName) => {
+      document.addEventListener(eventName, handleActivity, { passive: true });
+    });
+
+    scheduleAutoScroll();
 
     const goToReservation = () => {
       const reservationSection = document.getElementById('reservation');
