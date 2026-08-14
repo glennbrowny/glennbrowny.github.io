@@ -997,6 +997,13 @@ section,
   perspective: 1000px;
 }
 
+@media (max-width: 991.98px) {
+  .about-portrait-wrap {
+    max-width: 260px;
+    margin: 0 auto;
+  }
+}
+
 .about-portrait-wrap:before {
   content: "";
   position: absolute;

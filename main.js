@@ -457,9 +457,11 @@
 
   /**
    * Background music (mobile only): loops "Nuvole Bianche" and shows a
-   * fixed bottom-right "now playing" toggle. Most mobile browsers block
-   * autoplay with sound until a real user gesture, so if the initial
-   * play() is rejected, playback starts on the visitor's first touch/click.
+   * fixed bottom-right "now playing" toggle. Mobile browsers block audible
+   * autoplay until a real user gesture, so when the unmuted play() attempt
+   * is rejected, playback starts muted right away (so it's still in sync
+   * with the auto-scroll below) and unmutes itself on the visitor's very
+   * first touch/click anywhere on the page.
    */
   const bgMusic = document.getElementById('bgMusic');
   const musicToggle = document.getElementById('musicToggle');
@@ -474,18 +476,26 @@
     };
 
     attemptPlayMusic = () => {
-      bgMusic.play().then(() => setMusicState(true)).catch(() => setMusicState(false));
+      bgMusic.play().then(() => setMusicState(true)).catch(() => {
+        bgMusic.muted = true;
+        bgMusic.play().then(() => setMusicState(true)).catch(() => setMusicState(false));
+      });
     };
 
     if (prefersReducedMotion) attemptPlayMusic();
 
-    const resumeOnFirstGesture = () => attemptPlayMusic();
-    document.addEventListener('touchstart', resumeOnFirstGesture, { once: true, passive: true });
-    document.addEventListener('click', resumeOnFirstGesture, { once: true });
+    const unlockAudio = () => {
+      if (bgMusic.muted) bgMusic.muted = false;
+      if (bgMusic.paused) attemptPlayMusic();
+    };
+    document.addEventListener('touchstart', unlockAudio, { once: true, passive: true });
+    document.addEventListener('click', unlockAudio, { once: true });
 
     musicToggle.addEventListener('click', () => {
       if (bgMusic.paused) {
         attemptPlayMusic();
+      } else if (bgMusic.muted) {
+        bgMusic.muted = false;
       } else {
         bgMusic.pause();
       }
@@ -506,7 +516,7 @@
    * manually — it waits 2s then moves to Réservation.
    */
   if (isMobileViewport && !prefersReducedMotion) {
-    const AUTO_SCROLL_SPEED = 65; // pixels per second
+    const AUTO_SCROLL_SPEED = 90; // pixels per second
     const BOTTOM_THRESHOLD = 4; // px tolerance to count as "at the bottom"
     const IDLE_DELAY = 5000; // ms of inactivity before auto-scroll (re)starts
 
@@ -559,7 +569,11 @@
       idleTimerId = setTimeout(startAutoScroll, IDLE_DELAY);
     };
 
-    const handleActivity = () => {
+    const handleActivity = (event) => {
+      // A tap on the music button unlocks/toggles the audio but is not the
+      // visitor asking to scroll manually — ignore it so the auto-scroll
+      // keeps its rhythm instead of stuttering every time the music starts.
+      if (event.target && event.target.closest && event.target.closest('#musicToggle')) return;
       pauseAutoScroll();
       scheduleAutoScroll();
     };
