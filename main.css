@@ -796,6 +796,15 @@ section,
   margin-bottom: 0;
 }
 
+/* The "À propos" intro is split into two <p> tags so the mobile-only
+   floated photo (see .about-portrait-wrap-mobile) can sit between them —
+   without this, they'd render as one continuous paragraph on desktop but
+   with a visible gap. Zeroing their margins keeps desktop pixel-identical
+   to a single paragraph. */
+.about-intro-p {
+  margin: 0;
+}
+
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
@@ -1011,7 +1020,7 @@ section,
     float: right;
     width: 42%;
     max-width: 190px;
-    margin: 4px 0 18px 18px;
+    margin: 14px 0 18px 18px;
   }
 
   .about-portrait-wrap-mobile img {
@@ -1020,8 +1029,8 @@ section,
     box-shadow: 0 16px 32px -16px rgba(0, 0, 0, 0.35);
   }
 
-  .about .content {
-    overflow: hidden; /* clearfix: keeps the column's height honest around the float */
+  .about .section-title {
+    overflow: hidden; /* clearfix: keeps the block's height honest around the float */
   }
 }
 
