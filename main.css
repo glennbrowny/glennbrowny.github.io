@@ -997,10 +997,31 @@ section,
   perspective: 1000px;
 }
 
+/* Mobile/tablette uniquement : la photo est retirée de sa colonne dédiée
+   (masquée, voir .d-none .d-lg-block) et réapparaît ici, flottant à droite
+   du texte, pour être encadrée par la description (au-dessus, à gauche et
+   en dessous). Le rendu ordinateur n'est pas concerné. */
+.about-portrait-wrap-mobile {
+  display: none;
+}
+
 @media (max-width: 991.98px) {
-  .about-portrait-wrap {
-    max-width: 260px;
-    margin: 0 auto;
+  .about-portrait-wrap-mobile {
+    display: block;
+    float: right;
+    width: 42%;
+    max-width: 190px;
+    margin: 4px 0 18px 18px;
+  }
+
+  .about-portrait-wrap-mobile img {
+    display: block;
+    width: 100%;
+    box-shadow: 0 16px 32px -16px rgba(0, 0, 0, 0.35);
+  }
+
+  .about .content {
+    overflow: hidden; /* clearfix: keeps the column's height honest around the float */
   }
 }
 

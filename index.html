@@ -39,7 +39,7 @@
   <link href="glightbox.min.css" rel="stylesheet">
 
   <!-- Main CSS File -->
-  <link href="main.css?v=20260814-11" rel="stylesheet">
+  <link href="main.css?v=20260814-12" rel="stylesheet">
 
   <!-- =======================================================
   * Template Name: iPortfolio
@@ -72,9 +72,9 @@
       <ul>
         <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i>Accueil</a></li>
         <li><a href="#about"><i class="bi bi-person navicon"></i> À propos</a></li>
+        <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Services</a></li>
         <li><a href="#resume"><i class="bi bi-building navicon"></i> Notre entreprise</a></li>
         <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li>
-        <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Services</a></li>
         <li><a href="#reservation"><i class="bi bi-calendar-check navicon"></i> Réservation</a></li>
         <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
       </ul>
@@ -119,13 +119,16 @@
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="row gy-4 justify-content-center">
-          <div class="col-lg-4">
+          <div class="col-lg-4 d-none d-lg-block">
             <div class="about-portrait-wrap" data-aos="fade-right" data-aos-duration="900">
               <img src="about-portrait.jpg" class="img-fluid rounded-4 about-portrait-img" alt="Digital Numerique">
             </div>
           </div>
           <div class="col-lg-8 content">
             <h2 data-aos="fade-up" data-aos-delay="100">Nos domaines d'expertise &amp; Développement Web & photographie .</h2>
+            <div class="about-portrait-wrap-mobile d-lg-none" data-aos="fade-left" data-aos-duration="900">
+              <img src="about-portrait.jpg" class="img-fluid rounded-4" alt="Digital Numerique">
+            </div>
             <p class="fst-italic py-3" data-aos="fade-up" data-aos-delay="150">
               Conception de sites web modernes, applications web et solutions numériques sur mesure adaptées à vos besoins.
             </p>
@@ -283,6 +286,190 @@ Disponibilité : Lundi au Samedi – Sur rendez-vous ou en ligne.
       </div>
 
     </section><!-- /Skills Section -->
+
+    <!-- Services Section -->
+    <section id="services" class="services section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Services</h2>
+        <p>Quatre domaines d'expertise pour accompagner votre transformation digitale, de la conception à la réalisation.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-6 service-item" data-aos="fade-up" data-aos-delay="300">
+            <div class="d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-camera"></i></div>
+              <div>
+                <h4 class="title"><a href="#service-panel-photo" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-photo">Photographie & Audiovisuel <i class="bi bi-chevron-down toggle-icon"></i></a></h4>
+                <p class="description">Photographie professionnelle, couverture d'événements, portraits, restauration de photos, produits, prises de vues commerciales et réalisation de contenus visuels de haute qualité.</p>
+                <a class="tap-hint" href="#service-panel-photo" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-photo">
+                  <i class="bi bi-hand-index-thumb tap-hint-hand" aria-hidden="true"></i>
+                  <span class="tap-hint-open">Appuyez pour voir plus</span>
+                  <span class="tap-hint-close">Masquer les détails</span>
+                  <i class="bi bi-chevron-down tap-hint-arrow" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+            <div class="collapse service-panel" id="service-panel-photo">
+              <div class="service-panel-body">
+                <div class="service-motif-bg"><i class="bi bi-camera"></i></div>
+                <img loading="lazy" src="img xp.jpg" class="img-fluid rounded-4" alt="Photographie & Audiovisuel">
+                <p>Séances photo professionnelles (portraits, mariages, événements, produits), captation vidéo et restauration de vos anciennes photos abîmées : nous capturons et préservons vos moments importants avec un rendu soigné, du shooting à la livraison des fichiers finaux.</p>
+                <div class="service-motifs">
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-people"></i></div>
+                    <span>Portraits & mariages</span>
+                  </div>
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-camera-reels"></i></div>
+                    <span>Captation vidéo</span>
+                  </div>
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-magic"></i></div>
+                    <span>Restauration photo</span>
+                  </div>
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-bag-check"></i></div>
+                    <span>Photos produits</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-6 service-item" data-aos="fade-up" data-aos-delay="400">
+            <div class="d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-palette"></i></div>
+              <div>
+                <h4 class="title"><a href="#service-panel-graphisme" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-graphisme">Graphisme & Identité Visuelle <i class="bi bi-chevron-down toggle-icon"></i></a></h4>
+                <p class="description">Création de logos, affiches, flyers, cartes de visite, chartes graphiques, supports de communication et contenus pour les réseaux sociaux.</p>
+                <a class="tap-hint" href="#service-panel-graphisme" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-graphisme">
+                  <i class="bi bi-hand-index-thumb tap-hint-hand" aria-hidden="true"></i>
+                  <span class="tap-hint-open">Appuyez pour voir plus</span>
+                  <span class="tap-hint-close">Masquer les détails</span>
+                  <i class="bi bi-chevron-down tap-hint-arrow" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+            <div class="collapse service-panel" id="service-panel-graphisme">
+              <div class="service-panel-body">
+                <div class="service-motif-bg"><i class="bi bi-palette"></i></div>
+                <img loading="lazy" src="img xg.jpg" class="img-fluid rounded-4" alt="Graphisme & Identité Visuelle">
+                <p>Logo, charte graphique, affiches et flyers, supports imprimés ou numériques : nous donnons à votre marque une identité visuelle forte et cohérente, déclinée sur tous vos supports de communication.</p>
+                <div class="service-motifs">
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-vector-pen"></i></div>
+                    <span>Logo & identité</span>
+                  </div>
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-file-earmark-image"></i></div>
+                    <span>Affiches & flyers</span>
+                  </div>
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-credit-card-2-front"></i></div>
+                    <span>Supports imprimés</span>
+                  </div>
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-instagram"></i></div>
+                    <span>Réseaux sociaux</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-6 service-item" data-aos="fade-up" data-aos-delay="100">
+            <div class="d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-code-slash"></i></div>
+              <div>
+                <h4 class="title"><a href="#service-panel-web" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-web">Développement Web <i class="bi bi-chevron-down toggle-icon"></i></a></h4>
+                <p class="description">Conception de sites web modernes, applications web et solutions numériques sur mesure adaptées à vos besoins.</p>
+                <a class="tap-hint" href="#service-panel-web" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-web">
+                  <i class="bi bi-hand-index-thumb tap-hint-hand" aria-hidden="true"></i>
+                  <span class="tap-hint-open">Appuyez pour voir plus</span>
+                  <span class="tap-hint-close">Masquer les détails</span>
+                  <i class="bi bi-chevron-down tap-hint-arrow" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+            <div class="collapse service-panel" id="service-panel-web">
+              <div class="service-panel-body">
+                <div class="service-motif-bg"><i class="bi bi-code-slash"></i></div>
+                <img loading="lazy" src="img xd.jpg" class="img-fluid rounded-4" alt="Développement Web">
+                <p>Sites vitrines, plateformes e-commerce et applications web sur mesure : design moderne, navigation fluide et compatibilité mobile. De la maquette à la mise en ligne, nous vous accompagnons à chaque étape du projet.</p>
+                <div class="service-motifs">
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-window"></i></div>
+                    <span>Sites vitrines</span>
+                  </div>
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-app-indicator"></i></div>
+                    <span>Applications sur mesure</span>
+                  </div>
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-cart3"></i></div>
+                    <span>E-commerce</span>
+                  </div>
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-arrow-repeat"></i></div>
+                    <span>Refonte & maintenance</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-6 service-item" data-aos="fade-up" data-aos-delay="200">
+            <div class="d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-tools"></i></div>
+              <div>
+                <h4 class="title"><a href="#service-panel-maintenance" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-maintenance">Maintenance Informatique <i class="bi bi-chevron-down toggle-icon"></i></a></h4>
+                <p class="description">Installation, dépannage, maintenance préventive et corrective, administration de réseaux et sécurisation des infrastructures informatiques.</p>
+                <a class="tap-hint" href="#service-panel-maintenance" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-maintenance">
+                  <i class="bi bi-hand-index-thumb tap-hint-hand" aria-hidden="true"></i>
+                  <span class="tap-hint-open">Appuyez pour voir plus</span>
+                  <span class="tap-hint-close">Masquer les détails</span>
+                  <i class="bi bi-chevron-down tap-hint-arrow" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+            <div class="collapse service-panel" id="service-panel-maintenance">
+              <div class="service-panel-body">
+                <div class="service-motif-bg"><i class="bi bi-tools"></i></div>
+                <img loading="lazy" src="img xr.jpg" class="img-fluid rounded-4" alt="Maintenance Informatique">
+                <p>Installation et configuration de vos équipements, dépannage rapide, maintenance préventive et corrective, sécurisation de vos données et de votre réseau : nous veillons à la fiabilité de votre infrastructure informatique au quotidien.</p>
+                <div class="service-motifs">
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-pc-display"></i></div>
+                    <span>Installation & config.</span>
+                  </div>
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-wrench-adjustable"></i></div>
+                    <span>Dépannage</span>
+                  </div>
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-shield-lock"></i></div>
+                    <span>Sécurité réseau</span>
+                  </div>
+                  <div class="service-motif-item">
+                    <div class="motif-icon"><i class="bi bi-arrow-clockwise"></i></div>
+                    <span>Maintenance préventive</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Service Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Services Section -->
+
 
     <!-- Resume Section -->
     <section id="resume" class="resume section">
@@ -660,189 +847,6 @@ Disponibilité : Lundi au Samedi – Sur rendez-vous ou en ligne.
 
     </section><!-- /Portfolio Section -->
 
-    <!-- Services Section -->
-    <section id="services" class="services section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Services</h2>
-        <p>Quatre domaines d'expertise pour accompagner votre transformation digitale, de la conception à la réalisation.</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-6 service-item" data-aos="fade-up" data-aos-delay="300">
-            <div class="d-flex">
-              <div class="icon flex-shrink-0"><i class="bi bi-camera"></i></div>
-              <div>
-                <h4 class="title"><a href="#service-panel-photo" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-photo">Photographie & Audiovisuel <i class="bi bi-chevron-down toggle-icon"></i></a></h4>
-                <p class="description">Photographie professionnelle, couverture d'événements, portraits, restauration de photos, produits, prises de vues commerciales et réalisation de contenus visuels de haute qualité.</p>
-                <a class="tap-hint" href="#service-panel-photo" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-photo">
-                  <i class="bi bi-hand-index-thumb tap-hint-hand" aria-hidden="true"></i>
-                  <span class="tap-hint-open">Appuyez pour voir plus</span>
-                  <span class="tap-hint-close">Masquer les détails</span>
-                  <i class="bi bi-chevron-down tap-hint-arrow" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-            <div class="collapse service-panel" id="service-panel-photo">
-              <div class="service-panel-body">
-                <div class="service-motif-bg"><i class="bi bi-camera"></i></div>
-                <img loading="lazy" src="img xp.jpg" class="img-fluid rounded-4" alt="Photographie & Audiovisuel">
-                <p>Séances photo professionnelles (portraits, mariages, événements, produits), captation vidéo et restauration de vos anciennes photos abîmées : nous capturons et préservons vos moments importants avec un rendu soigné, du shooting à la livraison des fichiers finaux.</p>
-                <div class="service-motifs">
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-people"></i></div>
-                    <span>Portraits & mariages</span>
-                  </div>
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-camera-reels"></i></div>
-                    <span>Captation vidéo</span>
-                  </div>
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-magic"></i></div>
-                    <span>Restauration photo</span>
-                  </div>
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-bag-check"></i></div>
-                    <span>Photos produits</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-6 service-item" data-aos="fade-up" data-aos-delay="400">
-            <div class="d-flex">
-              <div class="icon flex-shrink-0"><i class="bi bi-palette"></i></div>
-              <div>
-                <h4 class="title"><a href="#service-panel-graphisme" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-graphisme">Graphisme & Identité Visuelle <i class="bi bi-chevron-down toggle-icon"></i></a></h4>
-                <p class="description">Création de logos, affiches, flyers, cartes de visite, chartes graphiques, supports de communication et contenus pour les réseaux sociaux.</p>
-                <a class="tap-hint" href="#service-panel-graphisme" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-graphisme">
-                  <i class="bi bi-hand-index-thumb tap-hint-hand" aria-hidden="true"></i>
-                  <span class="tap-hint-open">Appuyez pour voir plus</span>
-                  <span class="tap-hint-close">Masquer les détails</span>
-                  <i class="bi bi-chevron-down tap-hint-arrow" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-            <div class="collapse service-panel" id="service-panel-graphisme">
-              <div class="service-panel-body">
-                <div class="service-motif-bg"><i class="bi bi-palette"></i></div>
-                <img loading="lazy" src="img xg.jpg" class="img-fluid rounded-4" alt="Graphisme & Identité Visuelle">
-                <p>Logo, charte graphique, affiches et flyers, supports imprimés ou numériques : nous donnons à votre marque une identité visuelle forte et cohérente, déclinée sur tous vos supports de communication.</p>
-                <div class="service-motifs">
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-vector-pen"></i></div>
-                    <span>Logo & identité</span>
-                  </div>
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-file-earmark-image"></i></div>
-                    <span>Affiches & flyers</span>
-                  </div>
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-credit-card-2-front"></i></div>
-                    <span>Supports imprimés</span>
-                  </div>
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-instagram"></i></div>
-                    <span>Réseaux sociaux</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-6 service-item" data-aos="fade-up" data-aos-delay="100">
-            <div class="d-flex">
-              <div class="icon flex-shrink-0"><i class="bi bi-code-slash"></i></div>
-              <div>
-                <h4 class="title"><a href="#service-panel-web" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-web">Développement Web <i class="bi bi-chevron-down toggle-icon"></i></a></h4>
-                <p class="description">Conception de sites web modernes, applications web et solutions numériques sur mesure adaptées à vos besoins.</p>
-                <a class="tap-hint" href="#service-panel-web" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-web">
-                  <i class="bi bi-hand-index-thumb tap-hint-hand" aria-hidden="true"></i>
-                  <span class="tap-hint-open">Appuyez pour voir plus</span>
-                  <span class="tap-hint-close">Masquer les détails</span>
-                  <i class="bi bi-chevron-down tap-hint-arrow" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-            <div class="collapse service-panel" id="service-panel-web">
-              <div class="service-panel-body">
-                <div class="service-motif-bg"><i class="bi bi-code-slash"></i></div>
-                <img loading="lazy" src="img xd.jpg" class="img-fluid rounded-4" alt="Développement Web">
-                <p>Sites vitrines, plateformes e-commerce et applications web sur mesure : design moderne, navigation fluide et compatibilité mobile. De la maquette à la mise en ligne, nous vous accompagnons à chaque étape du projet.</p>
-                <div class="service-motifs">
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-window"></i></div>
-                    <span>Sites vitrines</span>
-                  </div>
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-app-indicator"></i></div>
-                    <span>Applications sur mesure</span>
-                  </div>
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-cart3"></i></div>
-                    <span>E-commerce</span>
-                  </div>
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-arrow-repeat"></i></div>
-                    <span>Refonte & maintenance</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-6 service-item" data-aos="fade-up" data-aos-delay="200">
-            <div class="d-flex">
-              <div class="icon flex-shrink-0"><i class="bi bi-tools"></i></div>
-              <div>
-                <h4 class="title"><a href="#service-panel-maintenance" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-maintenance">Maintenance Informatique <i class="bi bi-chevron-down toggle-icon"></i></a></h4>
-                <p class="description">Installation, dépannage, maintenance préventive et corrective, administration de réseaux et sécurisation des infrastructures informatiques.</p>
-                <a class="tap-hint" href="#service-panel-maintenance" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="service-panel-maintenance">
-                  <i class="bi bi-hand-index-thumb tap-hint-hand" aria-hidden="true"></i>
-                  <span class="tap-hint-open">Appuyez pour voir plus</span>
-                  <span class="tap-hint-close">Masquer les détails</span>
-                  <i class="bi bi-chevron-down tap-hint-arrow" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-            <div class="collapse service-panel" id="service-panel-maintenance">
-              <div class="service-panel-body">
-                <div class="service-motif-bg"><i class="bi bi-tools"></i></div>
-                <img loading="lazy" src="img xr.jpg" class="img-fluid rounded-4" alt="Maintenance Informatique">
-                <p>Installation et configuration de vos équipements, dépannage rapide, maintenance préventive et corrective, sécurisation de vos données et de votre réseau : nous veillons à la fiabilité de votre infrastructure informatique au quotidien.</p>
-                <div class="service-motifs">
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-pc-display"></i></div>
-                    <span>Installation & config.</span>
-                  </div>
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-wrench-adjustable"></i></div>
-                    <span>Dépannage</span>
-                  </div>
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-shield-lock"></i></div>
-                    <span>Sécurité réseau</span>
-                  </div>
-                  <div class="service-motif-item">
-                    <div class="motif-icon"><i class="bi bi-arrow-clockwise"></i></div>
-                    <span>Maintenance préventive</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Service Item -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Services Section -->
-
     <!-- Reservation Section -->
     <section id="reservation" class="reservation section">
 
@@ -1155,7 +1159,7 @@ Disponibilité : Lundi au Samedi – Sur rendez-vous ou en ligne.
   <script src="reservation-contact-emailjs.js"></script>
 
   <!-- Main JS File -->
-  <script src="main.js?v=20260814-11"></script>
+  <script src="main.js?v=20260814-12"></script>
 
 </body>
 
