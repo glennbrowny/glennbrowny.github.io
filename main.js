@@ -482,7 +482,7 @@
       });
     };
 
-    if (prefersReducedMotion) attemptPlayMusic();
+    attemptPlayMusic();
 
     const unlockAudio = () => {
       if (bgMusic.muted) bgMusic.muted = false;
@@ -508,32 +508,20 @@
   /**
    * Mobile-only auto-scroll: a requestAnimationFrame loop advances the page
    * at a slow, comfortable reading pace (~0.5-1px per frame at 60fps, i.e.
-   * roughly 30-50px/s) and starts the background music the first time it
-   * runs. It stops instantly on the visitor's first touch, and stays put
-   * once it reaches the bottom of the page. A discreet play/pause control
-   * lets the visitor resume or pause it at any time.
+   * roughly 30-50px/s). It stops instantly on the visitor's first touch
+   * (except taps on the music button, which manages its own state), and
+   * stays put once it reaches the bottom of the page.
    */
-  const autoScrollToggle = document.getElementById('autoScrollToggle');
-
-  if (isMobileViewport && !prefersReducedMotion && autoScrollToggle) {
-    const SCROLL_SPEED = 40; // px/s (~0.67px/frame at 60fps) — comfortable reading pace
+  if (isMobileViewport && !prefersReducedMotion) {
+    const SCROLL_SPEED = 70; // px/s — comfortable reading pace, increased per feedback
     const BOTTOM_THRESHOLD = 4; // px tolerance to count as "at the bottom"
 
     let rafId = null;
     let lastTimestamp = null;
-    let musicStarted = false;
-    let autoScrollEnabled = true;
 
     const atPageBottom = () => {
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
       return scrollable <= 0 || window.scrollY >= scrollable - BOTTOM_THRESHOLD;
-    };
-
-    const setToggleState = (isRunning) => {
-      autoScrollToggle.classList.toggle('is-running', isRunning);
-      autoScrollToggle.setAttribute('aria-pressed', String(isRunning));
-      autoScrollToggle.setAttribute('aria-label', isRunning ? 'Mettre en pause le défilement automatique' : 'Reprendre le défilement automatique');
-      autoScrollToggle.innerHTML = isRunning ? '<i class="bi bi-pause-fill"></i>' : '<i class="bi bi-play-fill"></i>';
     };
 
     const stopAutoScrollLoop = () => {
@@ -560,44 +548,19 @@
 
     const startAutoScrollLoop = () => {
       if (rafId || atPageBottom()) return;
-      if (!musicStarted) {
-        musicStarted = true;
-        attemptPlayMusic();
-      }
       rafId = requestAnimationFrame(autoScrollStep);
     };
 
-    const pause = () => {
-      stopAutoScrollLoop();
-      autoScrollEnabled = false;
-      setToggleState(false);
-    };
-
-    const resume = () => {
-      autoScrollEnabled = true;
-      setToggleState(true);
-      startAutoScrollLoop();
-    };
-
-    // Instant stop on the visitor's first touch anywhere — except taps on
-    // the music or auto-scroll controls themselves, which manage their own
-    // state and would otherwise fight with this listener.
-    document.addEventListener('touchstart', (event) => {
-      if (!autoScrollEnabled) return;
+    const handleFirstTouch = (event) => {
+      // Ignore taps on the music button (it manages its own state) so the
+      // listener stays armed until the visitor actually touches elsewhere.
       const target = event.target;
-      if (target && target.closest && (target.closest('#musicToggle') || target.closest('#autoScrollToggle'))) return;
-      pause();
-    }, { passive: true });
+      if (target && target.closest && target.closest('#musicToggle')) return;
+      stopAutoScrollLoop();
+      document.removeEventListener('touchstart', handleFirstTouch);
+    };
+    document.addEventListener('touchstart', handleFirstTouch, { passive: true });
 
-    autoScrollToggle.addEventListener('click', () => {
-      if (autoScrollEnabled) {
-        pause();
-      } else {
-        resume();
-      }
-    });
-
-    setToggleState(true);
     startAutoScrollLoop();
   }
 
